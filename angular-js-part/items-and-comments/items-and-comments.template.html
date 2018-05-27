@@ -1,0 +1,100 @@
+<div class="container-fluid">
+  <div class="row no-gutters">
+    <div class="col-2">
+      <div class="dy-aside">
+        <h1 class="dy-aside__app_name">Diary app</h1>
+        <div class="dy-aside__comment">Comment with no sense</div>
+        <p class="dy-aside__save_bttn">
+          <Button ng-click="$ctrl.my_local_storage.save_all($event)">{{$ctrl.my_local_storage.save_msg}}</Button>
+        </p>
+      </div>
+    </div>
+    <div class="col-10">
+      <div class="dy-main">
+        <div class="row no-gutters">
+          <div class="col-6">
+<!--Items part: begin-->
+<div class="dy-main__col dy-main__items">
+  <h1 class="dy-main__col__header">Items: {{$ctrl.items.arr.length}}</h1>
+  <div id="new_item" class="dy-main__items__new clearfix">
+    <div class="dy-main__items__new__item dy-main__items__new__input">
+      <input type="text" ng-model="$ctrl.new_item.name" ng-trim="true"
+      placeholder = "Type name here..." ng-keydown="$ctrl.new_item.input_key_down($event)">
+    </div>
+    <div class="dy-main__items__new__item dy-main__items__new__bttn">
+      <button ng-click="$ctrl.new_item.add_new()">Add new</button>
+    </div>
+  </div>
+  <ul class="dy-main__items__list">
+    <li ng-repeat="item in $ctrl.items.arr track by $index" 
+    class="dy-main__items__list__item">
+      <div ng-class="$ctrl.items.class_to_set($index)">
+          <a href="#" ng-click="$ctrl.items.item_click($index, $event)">
+          <div class="row no-gutters">
+            <div class="col-9">
+              <span class="dy-main__items__list__item__name">{{item.name}}
+                <span class="dy-main__items__list__item__name__comm_n">{{item.comments_arr.length}}</span>
+              </span>
+            </div>
+            <div class="col-3 dy-main__items__list__item__del_div">
+              <button ng-click="$ctrl.items.delete_item($index, $event)">Delete</button>
+            </div>
+          </div>
+          </a>
+      </div>
+    </li>
+  </ul>
+</div>
+<!--Items part: end-->
+          </div>
+          <div class="col-6">
+<!--Comments part: begin-->
+<div class="dy-main__col dy-main__comments">
+  <h1 class="dy-main__col__header">Comments</h1>
+  <ul ng-show="$ctrl.comments_to_show.show()" class="dy-main__comments__ul">
+    <li ng-repeat="comment_str in $ctrl.items.arr[$ctrl.comments_to_show.item_index].comments_arr track by $index">
+      <div class="media">
+        <img src="img/img_square_transparent.png" alt="" 
+        class="dy-main__comments__col_box">
+        <div class="media-body dy-main__comments__ul__li__comment">
+          <p>{{comment_str}}</p>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <!--Old:
+  <div ng-show="$ctrl.comments_to_show.show()">
+    <textarea rows="4" 
+    ng-model="$ctrl.new_comment.comment_text" 
+    ng-keydown="$ctrl.new_comment.key_down($event)" 
+    ng-trim="true" 
+    class="dy-main__comments__textarea" id="dy-main__comments__textarea"></textarea>
+  </div>
+  -->
+  <div class="media dy-main__comments__new_comment" ng-show="$ctrl.comments_to_show.show()">
+    <img src="img/img_square_transparent.png" alt="" 
+    class="dy-main__comments__col_box">
+    <div class="media-body">
+      <textarea rows="4" 
+      ng-model="$ctrl.new_comment.comment_text" 
+      ng-keydown="$ctrl.new_comment.key_down($event)" 
+      ng-trim="true" 
+      class="dy-main__comments__textarea" id="dy-main__comments__textarea"></textarea>
+    </div>
+  </div>
+</div>
+<!--Comments part: end-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div ng-show="$ctrl.test_mode">
+  <h1>For tests:</h1>
+  <p>New item name: {{$ctrl.new_item.name}}</p>
+  <p>Items array: {{$ctrl.items.arr}}</p>
+  <p>New comm text: {{$ctrl.new_comment.comment_text}}</p>
+  <p>Comments array: {{$ctrl.items.arr[$ctrl.comments_to_show.item_index].comments_arr}}</p>
+</div>
